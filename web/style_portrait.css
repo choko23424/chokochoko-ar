@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
+
+body {
+    background-color: black;
+    font-family: "Noto Sans JP", sans-serif;
+}
+
+/* VRボタン非表示 */
+.a-enter-vr-button {
+    display: none !important;
+}
+
+/* ロゴのスタイル */
+.logo {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+    box-sizing: border-box;
+    z-index: 99999;
+    pointer-events: none;
+}
+
+.logo img {
+    max-width: 70%;
+    max-height: 50px;
+    height: auto;
+    vertical-align: middle;
+}
+
+/* ボタンコンテナのスタイル */
+#button-container {
+    position: fixed;
+    right: 30px;
+    bottom: 35px;
+    z-index: 201;
+    /* ロゴより手前に表示 */
+}
+
+/* ボタン本体のスタイル */
+#hide-button {
+    /* アイコンを中央に配置するための設定 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* ボタンの大きさと形 */
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    /* 角丸の半径 */
+
+    /* 色と影 */
+    background-color: #d1dded;
+    color: #4273bd;
+    /* アイコンの色 */
+    box-shadow: 0px 0px 5px 2px #00000035;
+
+    /* 不要なスタイルのリセット */
+    border: none;
+    padding: 0;
+
+    /* カーソルの形 */
+    cursor: pointer;
+}
+
+/* ボタンにマウスが乗った時のスタイル */
+#hide-button:hover {
+    background-color: #e7f0fc;
+}
+
+/* アイコンのサイズ調整 */
+#hide-button .material-symbols-outlined {
+    font-size: 30px;
+    /* アイコンの大きさを調整 */
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24 !important;
+}
+
+/* ボタンコンテナの位置決め */
+#feedback-container {
+    position: fixed;
+    top: 20px;
+    /* 画面の上端から20pxの位置 */
+    right: 20px;
+    /* 画面の右端から20pxの位置 */
+    z-index: 201;
+    /* 他の要素より手前に表示 */
+}
+
+/* リンクの下線を消す */
+#feedback-container a {
+    text-decoration: none;
+
+    /* ▼▼ 以下を追加 ▼▼ */
+    display: flex;
+    /* テキストとアイコンを横並びにする */
+    align-items: center;
+    /* 上下中央揃えにする */
+    flex-direction: row;
+    /* HTMLの記述順（テキスト→アイコン）を反転させ、アイコンが右に来るようにする */
+    color: white;
+    /* リンク内のテキスト（アンケート）を白にする */
+    font-weight: bold;
+    gap: 4px;
+    /* テキストとアイコンの間に少し隙間を空ける */
+
+    /* アイコンに合わせてテキストにも影をつけ、視認性を高めます（任意） */
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* アイコンのスタイル */
+#feedback-container .material-symbols-outlined {
+    color: white;
+    font-size: 24px;
+    /* アイコンの大きさを指定 */
+    /* カメラ映像が明るい場合でも見やすいように、少しだけ影をつける（任意） */
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24 !important;
+}
+
+/* マウスホバー時に少し透明にする（任意） */
+#feedback-container a:hover {
+    opacity: 0.8;
+}
+
+/* ▼▼▼ 【追加】使い方ガイドのスタイル（修正版） ▼▼▼ */
+
+/* 画面全体を覆う黒透過レイヤー */
+#guide-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.85);
+    /* 背景の暗さ */
+    color: white;
+    box-sizing: border-box;
+    /* 上下の安全領域を確保しつつ配置 */
+    padding: 40px 20px 110px 20px; 
+
+    /* 中身を上下いっぱいに広げて配置制御する */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ガイドのコンテンツ枠 */
+.guide-content {
+    width: 100%;
+    max-width: 400px;
+    /* PC等で見づらくならないよう幅制限 */
+    height: 100%;
+    /* 画面の高さをフルに使う */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* タイトル・画像・ボタンを等間隔に配置 */
+}
+
+/* タイトルエリア（大きくしました） */
+.guide-title {
+    margin: 0;
+    font-size: 2.4rem;
+    /* 文字サイズを大きく変更 */
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    /* 縮まないようにする */
+    line-height: 1.2;
+}
+
+/* スライドエリア（ここが可変でもボタン位置を動かさないためにflex-growを使用） */
+#guide-slides-container {
+    flex-grow: 1;
+    /* 余ったスペースを全てここで使う */
+    display: flex;
+    align-items: center;
+    /* 上下中央寄せ */
+    justify-content: center;
+    /* 左右中央寄せ */
+    width: 100%;
+    position: relative;
+}
+
+/* 個別のスライド */
+.guide-slide {
+    display: none;
+    /* JSでactiveがつくとflexになる */
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.guide-slide.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 丸数字 */
+.step-number {
+    font-size: 1.8rem;
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+/* 画像コンテナ */
+.guide-image-container {
+    width: 270px;
+    /* 画像エリアの固定サイズ */
+    height: 270px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* 画像自体の影（任意） */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.guide-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 説明テキスト */
+.guide-text {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin: 0;
+    font-weight: bold;
+    white-space: pre-wrap;
+    text-align: center;
+    /* 左右中央揃えを徹底 */
+    width: 100%;
+}
+
+/* 文中のアイコン */
+.inline-icon {
+    font-size: 1.3rem;
+    vertical-align: sub;
+    color: #d1dded;
+}
+
+/* ナビゲーションボタンエリア */
+.guide-navigation {
+    width: 100%;
+    height: 80px;
+    flex-shrink: 0;
+    
+    display: grid;
+    grid-template-columns: 60px 1fr 60px; 
+    align-items: center;
+}
+
+/* 矢印ボタン */
+.nav-btn {
+    background: none;
+    border: none;
+    color: #ffffff !important; /* 常に真っ白 */
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* ▼▼▼ 追加: タップ時のグレー背景や色変化を無効化 ▼▼▼ */
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    opacity: 1 !important; /* 半透明化を禁止 */
+}
+
+/* ホバー時の変化を削除しました */
+/* .nav-btn:hover { opacity: 0.7; } */
+
+.nav-btn .material-symbols-outlined {
+    font-size: 4rem;
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    color: #ffffff !important;
+}
+
+/* 左矢印の位置指定 */
+#guide-prev-btn {
+    grid-column: 1;
+    justify-self: start;
+}
+
+/* 右矢印の位置指定 */
+#guide-next-btn {
+    grid-column: 3;
+    justify-self: end;
+}
+
+/* ボタンが無効な時は見えなくする */
+.nav-btn[style*="visibility: hidden"],
+.nav-btn[style*="display: none"] {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+/* スタートボタン */
+.start-btn {
+    grid-column: 2;
+    justify-self: center;
+    
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: "Noto Sans JP", sans-serif;
+    white-space: nowrap;
+    
+    /* スタートボタンもタップハイライトを消す */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* スタートボタンは押した感触があった方が良い場合は残しますが、
+   もしここも色を変えたくない場合は下のブロックを削除してください */
+.start-btn:active {
+    background-color: #e0e0e0; /* 押した瞬間だけ少し暗くする */
+}

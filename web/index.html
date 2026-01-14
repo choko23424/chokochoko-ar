@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi">
+    <meta name="robots" content="noindex">
+    <meta property="og:url" content="https://chokochoko-ar.pages.dev/web/">
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="ARを活用した学校紹介（モード選択）">
+    <meta property="og:description"
+        content="ARを活用した学校紹介のWebARアプリです。インストールは不要ですが、することでコンテンツを十分に楽しめます。制作の目的は、ARという技術を使うことで、リフォームによって外観から設備まで新しくなった情報棟の教室を、楽しく、印象に残りやすい形で皆さんに知っていただくことです。">
+    <meta property="og:site_name" content="2025年度情報工学科3年[ARを活用した学校紹介]グループ">
+    <meta property="og:image" content="https://chokochoko-ar.pages.dev/web/favicon/demo2img.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#4273bd">
+    <meta name="description"
+        content="ARを活用した学校紹介のWebARアプリです。インストールは不要ですが、することでコンテンツを十分に楽しめます。制作の目的は、ARという技術を使うことで、リフォームによって外観から設備まで新しくなった情報棟の教室を、楽しく、印象に残りやすい形で皆さんに知っていただくことです。">
+    <title>ARを活用した学校紹介（モード選択）</title>
+    <link rel="canonical" href="https://chokochoko-ar.pages.dev/">
+    <link rel="icon" href="favicon/joulogo.png">
+    <link rel="apple-touch-icon" sizes="1000x1000" href="favicon/joulogo.png">
+    <link rel="manifest" href="manifest.json">
+    <!-- Tailwind CSS CDNを読み込み -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* フォントを設定 */
+        /* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap'); */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
+
+        :root {
+            /* ダークモード用のカラーパレット */
+            --primary-color: #818cf8;
+            /* Light Indigo */
+            --primary-light: #a5b4fc;
+            --text-color: #ffffff;
+            /* 純粋な白に近い色に変更 (Gray 50相当) */
+            --bg-color: #1f2937;
+            /* Dark Slate Gray (背景: Gray 800相当) */
+            --main-container-bg: #374151;
+            /* メインボックスの背景 (Gray 700相当) */
+            --card-bg-light: #4b5563;
+            /* Card Background (選択肢ボックス) */
+            --card-bg-hover: #6b7280;
+            /* Even brighter hover background (Gray 500相当) */
+        }
+
+        body {
+            font-family: "Noto Sans JP" sans-serif;
+            /*'Inter',*/
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            /* 全体の文字色を白に近い色に設定 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        /* 画面選択ボタンの共通スタイル */
+        .orientation-card {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid transparent;
+            background-color: var(--card-bg-light);
+            /* Apply dark card background */
+            color: var(--text-color);
+        }
+
+        .orientation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            /* Stronger shadow for dark mode */
+            background-color: var(--card-bg-hover);
+        }
+
+        .orientation-card.selected {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.5);
+            /* Primary glow */
+        }
+
+        /* カスタムモーダル (alertの代替) のスタイル */
+        #message-box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            /* 濃い半透明のオーバーレイ */
+            display: none;
+            /* 初期状態では非表示 */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #message-box.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* 新しいSVGのサイズ調整 */
+        .orientation-icon-container svg {
+            width: 48px;
+            height: 72px;
+            /* 縦画面に合わせて高さを調整 */
+            fill: currentColor;
+            /* アイコンの色をテキスト色に合わせる */
+        }
+
+        .orientation-icon-container.landscape svg {
+            width: 72px;
+            /* 横画面に合わせて幅と高さを入れ替え */
+            height: 48px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- メインコンテナ -->
+    <div class="max-w-xl w-full mx-auto p-6 shadow-2xl rounded-xl" style="background-color: var(--main-container-bg);">
+        <header class="text-center mb-10">
+            <!-- ロゴ画像を独立させ、中央配置とサイズ調整を行う -->
+            <div class="flex justify-center mb-4">
+                <img src="https://chokochoko-ar.pages.dev/web/joulogoar.svg" style="width: 80%;margin: auto;"
+                    alt="ARを活用した学校紹介ロゴ" class=""><!--h-auto w-full max-w-[150px]-->
+            </div>
+
+            <!-- <hr class="my-4 border-gray-600" style="width: 80%;margin: auto;"> -->
+
+            <!-- メインタイトル -->
+            <h1 class="text-3xl font-extrabold text-white mb-2">
+                ARアプリ 画面方向選択
+            </h1>
+            <p class="text-gray-300 text-lg">
+                ご利用になる画面の向きを選択してください。<br>横画面モードをご利用になる場合は、スマートフォンを横画面モードに設定してください。
+            </p>
+        </header>
+
+        <!-- 選択肢カードコンテナ (Flexboxでモバイル対応) -->
+        <div class="flex flex-col md:flex-row gap-6">
+
+            <!-- 1. 縦画面モード (Portrait) --><button id="portrait-button"
+                class="orientation-card flex-1 p-6 rounded-xl shadow-lg transition-all"
+                onclick="selectOrientation('portrait')">
+                <div class="text-center">
+                    <div class="text-6xl mb-4 text-indigo-400 mx-auto w-fit orientation-icon-container">
+                        <!-- 縦画面を表すアイコン (ご指定のSVGを使用) --><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+                            fill="currentColor">
+                            <path
+                                d="M280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v124q18 7 29 22t11 34v80q0 19-11 34t-29 22v404q0 33-23.5 56.5T680-40H280Zm0-80h400v-720H280v720Zm0 0v-720 720Zm120-40h160q17 0 28.5-11.5T600-200q0-17-11.5-28.5T560-240H400q-17 0-28.5 11.5T360-200q0 17 11.5 28.5T400-160Z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-semibold mb-1 text-white">縦画面モード</h2>
+                    <p class="text-sm text-gray-300">（ポートレート）<br>スマホでブラウザから開く場合におすすめ</p>
+                </div>
+            </button>
+
+            <!-- 2. 横画面モード (Landscape) --><button id="landscape-button"
+                class="orientation-card flex-1 p-6 rounded-xl shadow-lg transition-all"
+                onclick="selectOrientation('landscape')">
+                <div class="text-center">
+                    <div class="text-6xl mb-4 text-teal-400 mx-auto w-fit orientation-icon-container landscape">
+                        <!-- 横画面を表すアイコン (縦画面のSVGを反時計回りに90度回転) --><svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 -960 960 960" fill="currentColor" style="transform: rotate(-90deg);">
+                            <path
+                                d="M280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v124q18 7 29 22t11 34v80q0 19-11 34t-29 22v404q0 33-23.5 56.5T680-40H280Zm0-80h400v-720H280v720Zm0 0v-720 720Zm120-40h160q17 0 28.5-11.5T600-200q0-17-11.5-28.5T560-240H400q-17 0-28.5 11.5T360-200q0 17 11.5 28.5T400-160Z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-semibold mb-1 text-white">横画面モード</h2>
+                    <p class="text-sm text-gray-300">（ランドスケープ）<br>Android、iOSのWebアプリで開く場合におすすめ</p>
+                </div>
+            </button>
+        </div>
+
+        <footer class="mt-8 text-center text-gray-500 text-sm"> <!-- text-gray-600からtext-gray-500に調整 -->
+            <p style="color:white;">※ 画面方向の選択に応じて、最適なAR体験が提供されます。</p>
+        </footer>
+    </div>
+
+    <!-- カスタムメッセージボックス (alertの代替) -->
+    <div id="message-box">
+        <!-- モーダルのコンテンツは背景より明るめの色に変更 -->
+        <div id="message-content"
+            class="bg-gray-700 p-8 rounded-lg shadow-2xl max-w-sm w-full text-center transform scale-95 transition-transform duration-300">
+            <h3 id="message-title" class="text-xl font-bold mb-4 text-white">画面選択</h3>
+            <p id="message-text" class="mb-6 text-gray-200">メッセージ本文</p>
+            <!-- text-gray-300からtext-gray-200に調整し、白に近づける --><button onclick="closeMessageBox()"
+                class="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition duration-150 font-medium">
+                OK <!-- テキストを「OK / 遷移 (シミュレーション)」から「OK」に修正 --></button>
+        </div>
+    </div>
+
+    <script>
+        // グローバルなDOM要素
+        const messageBox = document.getElementById('message-box');
+        const messageTitle = document.getElementById('message-title');
+        const messageText = document.getElementById('message-text');
+        const portraitButton = document.getElementById('portrait-button');
+        const landscapeButton = document.getElementById('landscape-button');
+
+        // **【追加】** 選択されたオリエンテーションを保持するグローバル変数
+        let selectedOrientation = null;
+
+        /**
+         * カスタムメッセージボックスを表示する関数
+         * @param {string} title - メッセージボックスのタイトル
+         * @param {string} message - メッセージ本文
+         */
+        function showMessageBox(title, message) {
+            messageTitle.textContent = title;
+            messageText.textContent = message;
+            // アニメーションのためにクラスを追加
+            messageBox.classList.add('active');
+            document.getElementById('message-content').style.transform = 'scale(1)';
+        }
+
+        /**
+         * カスタムメッセージボックスを閉じる関数 (OKボタンクリック時)
+         */
+        function closeMessageBox() {
+            // アニメーションのためにクラスを削除
+            document.getElementById('message-content').style.transform = 'scale(0.95)';
+            messageBox.classList.remove('active');
+
+            // **【リンクの書き込み場所】**
+            // モーダルが閉じられたら、保持している情報に基づいてリダイレクトを実行する
+            if (selectedOrientation === 'portrait') {
+                // 縦画面モードのARアプリへのURLに置き換えてください
+                console.log("Redirecting to Portrait AR App (Simulation)");
+                window.location.href = 'portrait.html';
+            } else if (selectedOrientation === 'landscape') {
+                // 横画面モードのARアプリへのURLに置き換えてください
+                console.log("Redirecting to Landscape AR App (Simulation)");
+                window.location.href = 'landscape.html';
+            }
+
+            // 選択状態をリセット
+            selectedOrientation = null;
+        }
+
+        /**
+         * 画面方向を選択する関数
+         * @param {string} orientation - 'portrait' または 'landscape'
+         */
+        function selectOrientation(orientation) {
+            let title = "ARアプリへ移動";
+            let message = "";
+
+            // 選択された方向を保持
+            selectedOrientation = orientation;
+
+            // UIの強調をリセット
+            portraitButton.classList.remove('selected');
+            landscapeButton.classList.remove('selected');
+
+            if (orientation === 'portrait') {
+                message = "縦画面モードのARページに遷移します。";
+                portraitButton.classList.add('selected');
+            } else if (orientation === 'landscape') {
+                message = "横画面モードのARページに遷移します。";
+                landscapeButton.classList.add('selected');
+            }
+
+            showMessageBox(title, message);
+        }
+
+        // ページロード時にモバイルビューでも美しく見えるようにする
+        window.addEventListener('load', () => {
+            console.log("Orientation Selector Loaded.");
+        });
+
+    </script>
+</body>
+
+</html>

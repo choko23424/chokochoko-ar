@@ -1,0 +1,26 @@
+{
+  "name": "Chokochoko_AR",
+  "short_name": "Choko AR",
+  "description": "ARを活用した学校施設紹介",
+  "start_url": "https://chokochoko-ar.pages.dev/web/",
+  "id": "https://chokochoko-ar.pages.dev/web/",
+  "display": "fullscreen",
+  "background_color": "#000000",
+  "theme_color": "#1f1f1f",
+  "display_override": [
+    "window-controls-overlay"
+  ],
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "https://chokochoko-ar.pages.dev/web/favicon/joulogo_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "https://chokochoko-ar.pages.dev/web/favicon/joulogo.png",
+      "sizes": "680x680",
+      "type": "image/png"
+    }
+  ]
+}

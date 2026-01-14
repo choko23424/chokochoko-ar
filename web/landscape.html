@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi">
+    <meta name="robots" content="noindex">
+    <meta property="og:url" content="https://chokochoko-ar.pages.dev/">
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="ARを活用した学校紹介（Landscape）">
+    <meta property="og:description"
+        content="ARを活用した学校紹介のWebARアプリです。インストールは不要ですが、することでコンテンツを十分に楽しめます。制作の目的は、ARという技術を使うことで、リフォームによって外観から設備まで新しくなった情報棟の教室を、楽しく、印象に残りやすい形で皆さんに知っていただくことです。">
+    <meta property="og:site_name" content="2025年度情報工学科3年[ARを活用した学校紹介]グループ">
+    <meta property="og:image" content="https://chokochoko-ar.pages.dev/web/favicon/demo2img.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#4273bd">
+    <meta name="description"
+        content="ARを活用した学校紹介のWebARアプリです。インストールは不要ですが、することでコンテンツを十分に楽しめます。制作の目的は、ARという技術を使うことで、リフォームによって外観から設備まで新しくなった情報棟の教室を、楽しく、印象に残りやすい形で皆さんに知っていただくことです。">
+    <title>ARを活用した学校紹介（Landscape）</title>
+    <link rel="canonical" href="https://chokochoko-ar.pages.dev/">
+    <link rel="icon" href="favicon/joulogo.png">
+    <link rel="apple-touch-icon" sizes="1000x1000" href="favicon/joulogo.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style_landscape.css">
+
+    <!-- A-Frame ライブラリ -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <!-- AR.js ライブラリ (A-Frame用) -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0" />
+</head>
+
+<body style='margin : 0; overflow: hidden;'>
+
+    <!-- 横画面用 使い方ガイドのオーバーレイ -->
+    <div id="guide-overlay">
+        <div class="guide-content">
+            <!-- スライド表示エリア -->
+            <div id="guide-slides-container">
+
+                <!-- 1ページ目 -->
+                <div class="guide-slide active">
+                    <!-- 左側：画像 -->
+                    <div class="guide-left-col">
+                        <div class="guide-image-container">
+                            <!-- 画像パスは適宜変更してください -->
+                            <img src="assets/img/guide1.png" alt="ガイド図1">
+                        </div>
+                    </div>
+                    <!-- 右側：説明 -->
+                    <div class="guide-right-col">
+                        <div class="guide-header-row">
+                            <h2 class="guide-title">使い方ガイド</h2>
+                            <div class="step-number">①</div>
+                        </div>
+                        <div class="guide-text-wrapper">
+                            <p class="guide-text">マーカーにカメラをかざしてください<br>※カメラなどの使用を許可してください</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2ページ目 -->
+                <div class="guide-slide">
+                    <div class="guide-left-col">
+                        <div class="guide-image-container">
+                            <img src="assets/img/guide2.png" alt="ガイド図2">
+                        </div>
+                    </div>
+                    <div class="guide-right-col">
+                        <div class="guide-header-row">
+                            <h2 class="guide-title">使い方ガイド</h2>
+                            <div class="step-number">②</div>
+                        </div>
+                        <div class="guide-text-wrapper">
+                            <p class="guide-text">画面上に3Dモデルが出現します<br>マーカーからカメラをそらしても<br>20秒間は表示が維持されます</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3ページ目 -->
+                <div class="guide-slide">
+                    <div class="guide-left-col">
+                        <div class="guide-image-container">
+                            <img src="assets/img/guide3.png" alt="ガイド図3">
+                        </div>
+                    </div>
+                    <div class="guide-right-col">
+                        <div class="guide-header-row">
+                            <h2 class="guide-title">使い方ガイド</h2>
+                            <div class="step-number">③</div>
+                        </div>
+                        <div class="guide-text-wrapper">
+                            <p class="guide-text">他のマーカーに視線を移すと<br>3Dモデルが更新されます</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4ページ目 -->
+                <div class="guide-slide">
+                    <div class="guide-left-col">
+                        <div class="guide-image-container">
+                            <img src="assets/img/guide4.png" alt="ガイド図4">
+                        </div>
+                    </div>
+                    <div class="guide-right-col">
+                        <div class="guide-header-row">
+                            <h2 class="guide-title">使い方ガイド</h2>
+                            <div class="step-number">④</div>
+                        </div>
+                        <div class="guide-text-wrapper">
+                            <p class="guide-text">右下の[▶]ボタンから固定されている<br>3Dモデルを非表示にすることができます</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5ページ目 -->
+                <div class="guide-slide">
+                    <div class="guide-left-col">
+                        <div class="guide-image-container">
+                            <img src="joulogoar_b.svg" alt="ガイド図5">
+                        </div>
+                    </div>
+                    <div class="guide-right-col">
+                        <div class="guide-header-row">
+                            <h2 class="guide-title">使い方ガイド</h2>
+                            <div class="step-number">⑤</div>
+                        </div>
+                        <div class="guide-text-wrapper">
+                            <p class="guide-text">最後に右上の[アンケート]からアンケートへのご協力をお願いします</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ナビゲーションボタン（画面右下に固定配置） -->
+            <div class="guide-navigation">
+                <!-- 戻るボタン -->
+                <button id="guide-prev-btn" class="nav-btn">
+                    <span class="material-symbols-outlined" style="transform: rotate(180deg);">
+                        play_arrow
+                    </span>
+                </button>
+
+                <!-- スタートボタン -->
+                <button id="guide-start-btn" class="start-btn" style="display: none;">
+                    スタート
+                </button>
+
+                <!-- 次へボタン -->
+                <button id="guide-next-btn" class="nav-btn">
+                    <span class="material-symbols-outlined">
+                        play_arrow
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="feedback-container">
+        <a href="feedback.html">
+            アンケート
+            <span class="material-symbols-outlined">
+                feedback
+            </span>
+        </a>
+    </div>
+
+    <!-- 操作ボタン -->
+    <div id="button-container" style="display: none;">
+        <button id="hide-button">
+            <span class="material-symbols-outlined">
+                play_arrow
+            </span>
+        </button>
+    </div>
+
+    <a-scene embedded
+        arjs='sourceType: webcam; sourceWidth: 1920; sourceHeight: 1080; displayWidth: 1920; displayHeight: 1080; debugUIEnabled: false;'
+        vr-mode-ui="enabled: false" renderer="antialias: true; precision: high;">
+
+        <a-assets>
+            <a-asset-item id="model-demo2" src="assets/models/demo2_2.glb"></a-asset-item>
+            <a-asset-item id="model-innovative" src="assets/models/innovative.glb"></a-asset-item>
+            <a-asset-item id="model-innovative_2" src="assets/models/innovative_2.glb"></a-asset-item>
+            <a-asset-item id="model-ai" src="assets/models/ai.glb"></a-asset-item>
+            <a-asset-item id="model-co_creation" src="assets/models/co_creation.glb"></a-asset-item>
+            <a-asset-item id="model-first" src="assets/models/first.glb"></a-asset-item>
+            <a-asset-item id="model-second" src="assets/models/second.glb"></a-asset-item>
+        </a-assets>
+
+        <a-marker id="marker-demo2" type="pattern" url="assets/markers/pattern-demo.patt"></a-marker>
+        <a-marker id="marker-innovative" type="pattern" url="assets/markers/pattern-innovative.patt"></a-marker>
+        <a-marker id="marker-innovative_2" type="pattern" url="assets/markers/pattern-innovative_2.patt"></a-marker>
+        <a-marker id="marker-ai" type="pattern" url="assets/markers/pattern-ai.patt"></a-marker>
+        <a-marker id="marker-co_creation" type="pattern" url="assets/markers/pattern-co-creation.patt"></a-marker>
+        <a-marker id="marker-first" type="pattern" url="assets/markers/pattern-first.patt"></a-marker>
+        <a-marker id="marker-second" type="pattern" url="assets/markers/pattern-second.patt"></a-marker>
+
+        <!-- カメラエンティティ -->
+        <a-entity camera>
+            <a-entity id="fixed-demo2" scale="1.3 1.3 1.3" position="0 0.1 -5" rotation="0 0 0" visible="false">
+                <a-entity gltf-model="#model-demo2" position="0 0 0" rotation="0 0 0"></a-entity>
+            </a-entity>
+            <a-entity id="fixed-innovative" scale="0.3 0.3 0.3" position="-2.2 -1.5 -10" rotation="0 0 0"
+                visible="false">
+                <a-entity gltf-model="#model-innovative" position="-1.5 1.0 0"></a-entity>
+            </a-entity>
+            <a-entity id="fixed-innovative_2" scale="0.3 0.3 0.3" position="-2.2 -1.5 -10" rotation="0 0 0"
+                visible="false">
+                <a-entity gltf-model="#model-innovative_2" position="-1.5 1.0 0"></a-entity>
+            </a-entity>
+            <a-entity id="fixed-ai" scale="0.3 0.3 0.3" position="-2.2 -1.5 -10" rotation="0 0 0" visible="false">
+                <a-entity gltf-model="#model-ai" position="-1.5 1.0 0"></a-entity>
+            </a-entity>
+            <a-entity id="fixed-co_creation" scale="0.3 0.3 0.3" position="-2.2 -1.5 -10" rotation="0 0 0"
+                visible="false">
+                <a-entity gltf-model="#model-co_creation" position="-1.5 1.0 0"></a-entity>
+            </a-entity>
+            <a-entity id="fixed-first" scale="0.3 0.3 0.3" position="-2.2 -1.5 -10" rotation="0 0 0" visible="false">
+                <a-entity gltf-model="#model-first" position="-1.5 1.0 0"></a-entity>
+            </a-entity>
+            <a-entity id="fixed-second" scale="0.3 0.3 0.3" position="-2.2 -1.5 -10" rotation="0 0 0" visible="false">
+                <a-entity gltf-model="#model-second" position="-1.5 1.0 0"></a-entity>
+            </a-entity>
+        </a-entity>
+
+    </a-scene>
+
+    <span class="logo">
+        <img src="joulogoar.svg" alt="ロゴ">
+    </span>
+
+    <script src="main_landscape.js"></script>
+</body>
+
+</html>

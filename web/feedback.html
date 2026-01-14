@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <meta property="og:url" content="https://chokochoko-ar.pages.dev/web/feedback.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="ARを活用した学校紹介">
+    <meta property="og:description" content="ARを活用した学校紹介のフィードバックページです。">
+    <meta property="og:site_name" content="2025年度情報工学科3年[ARを活用した学校紹介]グループ">
+    <meta property="og:image" content="https://chokochoko-ar.pages.dev/web/favicon/ogimage.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#d9e3f2">
+    <meta name="description" content="ARを活用した学校紹介のフィードバックページです。">
+    <title>課題研究「ARを活用した学校紹介」Webアプリ使用後アンケート（フィードバック）</title>
+    <link rel="canonical" href="https://chokochoko-ar.pages.dev/web/feedback.html">
+    <link rel="manifest" href="/web/manifest.json">
+    <link rel="icon" href="https://ssl.gstatic.com/docs/spreadsheets/forms/favicon_qp2.png">
+    <link rel="apple-touch-icon" href="https://ssl.gstatic.com/docs/spreadsheets/forms/favicon_qp2.png">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: #d9e3f2;
+            background-image: url("joulogoar.svg");
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            background-size: 25%;
+
+            @media screen and (max-width: 768px) {
+                background-image: url("joulogoar_b.svg");
+                background-size: contain;
+                background-position: top center;
+            }
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+
+            @media screen and (max-width: 768px) {
+                height: 95%;
+                margin-top: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLSd-E-kVvU8K2nrehN8NYW-6LfIkOg0rp3UssacOJUMUwsDxEQ/viewform?embedded=true"
+        frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // 画面の向きを縦長に固定する
+            const lockOrientation = async () => {
+                try {
+                    await screen.orientation.lock('portrait');
+                } catch (err) {
+                    // console.error('画面の向きをロックできませんでした:', err);
+                }
+            };
+            lockOrientation();
+        });
+    </script>
+</body>
+
+</html>
